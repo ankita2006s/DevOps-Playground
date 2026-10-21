@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+    <h2>📂 Git Simulator</h2>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="pipeline.html">CI/CD</a>
+        <a href="docker.html">Docker</a>
+        <a href="quiz.html">Quiz</a>
+    </nav>
+</header>
+
+<main class="page-content">
+    <h1>Learn Git Interactively</h1>
+
+    <p>
+        Simulate repository initialization, staging, commits,
+        and pushing code to a remote repository.
+    </p>
+
+    <section class="panel">
+        <h2>Repository Actions</h2>
+
+        <div class="actions">
+            <button class="button" id="init">Initialize Repository</button>
+            <button class="button" id="add">Add File</button>
+            <button class="button" id="commit">Commit Changes</button>
+            <button class="button" id="push">Push to GitHub</button>
+            <button class="button secondary-button" id="reset">Reset Simulation</button>
+        </div>
+
+        <h3>Terminal Output</h3>
+        <pre class="output" id="terminal" aria-live="polite">Welcome!
+Initialize your repository to begin.</pre>
+    </section>
+
+    <section class="panel">
+        <h2>Repository Status</h2>
+        <p id="status">Repository not initialized.</p>
+        <p id="commitCount">Commits: 0</p>
+    </section>
+</main>
+
+<script>
+    let initialized = false;
+    let staged = false;
+    let commits = 0;
+    let pushed = false;
+
+    const terminal = document.getElementById("terminal");
+    const status = document.getElementById("status");
+    const commitCount = document.getElementById("commitCount");
+
+    function log(message) {
+        terminal.textContent += "\n\n$ " + message;
+    }
+
+    document.getElementById("init").addEventListener("click", () => {
+        if (initialized) {
+            log("Repository already initialized.");
+            return;
+        }
+
+        initialized = true;
+        status.textContent = "Repository initialized.";
+        log("git init\nRepository initialized successfully.");
+    });
+
+    document.getElementById("add").addEventListener("click", () => {
+        if (!initialized) {
+            log("Error: Initialize the repository first.");
+            return;
+        }
+
+        staged = true;
+        pushed = false;
+        status.textContent = "Changes staged for commit.";
+        log("git add .\nChanges added to the staging area.");
+    });
+
+    document.getElementById("commit").addEventListener("click", () => {
+        if (!initialized || !staged) {
+            log("Error: Initialize the repository and add changes first.");
+            return;
+        }
+
+        commits++;
+        staged = false;
+        pushed = false;
+
+        commitCount.textContent = "Commits: " + commits;
+        status.textContent = "Commit created successfully.";
+
+        log('git commit -m "Update project"\nCommit created successfully.');
+    });
+
+    document.getElementById("push").addEventListener("click", () => {
+        if (!initialized || commits === 0) {
+            log("Error: Create at least one commit before pushing.");
+            return;
+        }
+
+        pushed = true;
+        status.textContent = "Simulation: Changes pushed successfully.";
+        log("git push origin main\nSimulation completed successfully.");
+        log("Note: No actual GitHub repository was modified.");
+    });
+
+    document.getElementById("reset").addEventListener("click", () => {
+        initialized = false;
+        staged = false;
+        commits = 0;
+        pushed = false;
+
+        terminal.textContent = "Simulation reset.\nInitialize your repository to begin.";
+        status.textContent = "Repository not initialized.";
+        commitCount.textContent = "Commits: 0";
+    });
+</script>
+
+</body>
+</html>
+
