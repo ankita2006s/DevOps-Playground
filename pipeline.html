@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CI/CD Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+    <h2>⚙️ CI/CD Simulator</h2>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="git.html">Git</a>
+        <a href="docker.html">Docker</a>
+        <a href="quiz.html">Quiz</a>
+    </nav>
+</header>
+
+<main class="page-content">
+    <h1>Interactive CI/CD Pipeline</h1>
+
+    <p>
+        Learn how source code passes through build, test,
+        and deployment stages.
+    </p>
+
+    <section class="panel">
+        <h2>Pipeline Stages</h2>
+
+        <label for="failureStage">Simulate a failure at:</label>
+
+        <select id="failureStage">
+            <option value="none">No failure</option>
+            <option value="Build">Build</option>
+            <option value="Test">Test</option>
+            <option value="Deploy">Deploy</option>
+        </select>
+
+        <div class="stage-list">
+            <div class="stage" id="Code">📝<br>Code<br>Waiting</div>
+            <div class="stage" id="Build">🔨<br>Build<br>Waiting</div>
+            <div class="stage" id="Test">🧪<br>Test<br>Waiting</div>
+            <div class="stage" id="Deploy">🚀<br>Deploy<br>Waiting</div>
+        </div>
+
+        <div class="actions">
+            <button class="button" id="start">Start Pipeline</button>
+            <button class="button secondary-button" id="reset">Reset Pipeline</button>
+        </div>
+
+        <h3>Pipeline Log</h3>
+        <pre class="output" id="log" aria-live="polite">Pipeline is ready.</pre>
+    </section>
+</main>
+
+<script>
+    const stages = ["Code", "Build", "Test", "Deploy"];
+    const logBox = document.getElementById("log");
+    const startButton = document.getElementById("start");
+    const failureStage = document.getElementById("failureStage");
+
+    let runId = 0;
+    let running = false;
+
+    function resetStages() {
+        stages.forEach(name => {
+            const element = document.getElementById(name);
+            element.className = "stage";
+            element.innerHTML = {
+                Code: "📝<br>Code<br>Waiting",
+                Build: "🔨<br>Build<br>Waiting",
+                Test: "🧪<br>Test<br>Waiting",
+                Deploy: "🚀<br>Deploy<br>Waiting"
+            }[name];
+        });
+    }
+
+    function setStage(name, state) {
+        const element = document.getElementById(name);
+        element.className = "stage " + state;
+
+        const icons = {
+            Code: "📝",
+            Build: "🔨",
+            Test: "🧪",
+            Deploy: "🚀"
+        };
+
+        element.innerHTML =
+            icons[name] + "<br>" + name + "<br>" + state.toUpperCase();
+    }
+
+    function wait(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    document.getElementById("start").addEventListener("click", async () => {
+        if (running) return;
+
+        running = true;
+        startButton.disabled = true;
+
+        const currentRun = ++runId;
+        const selectedFailure = failureStage.value;
+
+        resetStages();
+        logBox.textContent = "Starting simulated pipeline...";
+
+        for (const name of stages) {
+            if (currentRun !== runId) return;
+
+            setStage(name, "running");
+            logBox.textContent += "\nRunning " + name + " stage...";
+
+            await wait(1000);
+
+            if (currentRun !== runId) return;
+
+            if (name === selectedFailure) {
+                setStage(name, "failed");
+                logBox.textContent += "\nERROR: " + name + " stage failed.";
+                logBox.textContent += "\nPipeline stopped. Fix the issue and retry.";
+                running = false;
+                startButton.disabled = false;
+                return;
+            }
+
+            setStage(name, "success");
+            logBox.textContent += "\n" + name + " stage completed successfully.";
+        }
+
+        logBox.textContent += "\n\nPipeline completed successfully!";
+        running = false;
+        startButton.disabled = false;
+    });
+
+    document.getElementById("reset").addEventListener("click", () => {
+        runId++;
+        running = false;
+        startButton.disabled = false;
+
+        resetStages();
+        logBox.textContent = "Pipeline reset. Ready for a new simulation.";
+    });
+</script>
+
+</body>
+</html>
+
