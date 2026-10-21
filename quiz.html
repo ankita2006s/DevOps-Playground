@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps Quiz</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .quiz-container {
+            max-width: 650px;
+            margin: 30px auto;
+            background: #1f2937;
+            padding: 25px;
+            border-radius: 15px;
+        }
+
+        h1 {
+            color: #38bdf8;
+        }
+
+        #question {
+            font-size: 21px;
+            margin: 25px 0;
+        }
+
+        .option {
+            display: block;
+            width: 100%;
+            padding: 13px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            background: #374151;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+
+        .option:hover:not(:disabled) {
+            background: #2563eb;
+        }
+
+        .option:disabled {
+            cursor: default;
+            opacity: 0.9;
+        }
+
+        #feedback {
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .main-button {
+            padding: 12px 22px;
+            margin: 8px;
+            border: none;
+            border-radius: 8px;
+            background: #0ea5e9;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .main-button:hover {
+            background: #0284c7;
+        }
+
+        #progress {
+            color: #d1d5db;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="quiz-container">
+
+        <h1>🚀 DevOps Playground Quiz</h1>
+
+        <p>Test your DevOps knowledge!</p>
+
+        <p id="progress"></p>
+
+        <h2 id="question">Loading question...</h2>
+
+        <div id="options"></div>
+
+        <p id="feedback" aria-live="polite"></p>
+
+        <button
+            id="nextButton"
+            class="main-button"
+            hidden
+            type="button">
+            Next Question
+        </button>
+
+        <h3 id="score"></h3>
+
+        <button
+            id="restartButton"
+            class="main-button"
+            type="button"
+            hidden>
+            🔄 Restart Quiz
+        </button>
+
+    </div>
+
+    <script>
+        // Question bank: Add as many questions as you want.
+        const questionBank = [
+            {
+                question: "1. What does DevOps combine?",
+                options: [
+                    "Development and Operations",
+                    "Design and Drawing",
+                    "Database and HTML",
+                    "Hardware and Networking"
+                ],
+                answer: 0,
+                explanation: "DevOps combines software development and IT operations."
+            },
+            {
+                question: "2. Which tool is used for version control?",
+                options: [
+                    "MS Paint",
+                    "Git",
+                    "Calculator",
+                    "Notepad"
+                ],
+                answer: 1,
+                explanation: "Git tracks changes in source code."
+            },
+            {
+                question: "3. What is GitHub mainly used for?",
+                options: [
+                    "Editing videos",
+                    "Playing games",
+                    "Hosting and collaborating on code repositories",
+                    "Creating presentations only"
+                ],
+                answer: 2,
+                explanation: "GitHub hosts code repositories and supports collaboration."
+            },
+            {
+                question: "4. What does CI stand for in DevOps?",
+                options: [
+                    "Computer Internet",
+                    "Code Installation",
+                    "Central Information",
+                    "Continuous Integration"
+                ],
+                answer: 3,
+                explanation: "CI stands for Continuous Integration."
+            },
+            {
+                question: "5. What is the main purpose of CD in a CI/CD pipeline?",
+                options: [
+                    "To help automate software delivery or deployment",
+                    "To design logos",
+                    "To increase screen brightness",
+                    "To create database tables only"
+                ],
+                answer: 0,
+                explanation: "CD automates software delivery or deployment, depending on the workflow."
+            },
+            {
+                question: "6. Which language is commonly used to write Jenkins pipelines?",
+                options: [
+                    "HTML only",
+                    "Groovy-based Pipeline syntax",
+                    "CSS only",
+                    "SQL only"
+                ],
+                answer: 1,
+                explanation: "Jenkins Pipeline uses a Groovy-based syntax."
+            },
+            {
+                question: "7. What is Docker used for?",
+                options: [
+                    "Making spreadsheets",
+                    "Editing photographs",
+                    "Packaging and running applications in containers",
+                    "Creating passwords only"
+                ],
+                answer: 2,
+                explanation: "Docker helps package and run applications in containers."
+            },
+            {
+                question: "8. What is a Docker image?",
+                options: [
+                    "A running computer",
+                    "A GitHub account",
+                    "A type of database query",
+                    "A template used to create containers"
+                ],
+                answer: 3,
+                explanation: "A Docker image contains the files and configuration used to create a container."
+            },
+            {
+                question: "9. Which command initializes a new Git repository?",
+                options: [
+                    "git init",
+                    "git start",
+                    "git create",
+                    "git open"
+                ],
+                answer: 0,
+                explanation: "git init initializes a new Git repository."
+            },
+            {
+                question: "10. Which command records staged changes in Git history?",
+                options: [
+                    "git open",
+                    "git commit",
+                    "git status",
+                    "git check"
+                ],
+                answer: 1,
+                explanation: "git commit records staged changes as a commit."
+            },
+            {
+                question: "11. What is the purpose of automated testing?",
+                options: [
+                    "To change the monitor",
+                    "To remove all source code",
+                    "To check software behavior automatically",
+                    "To shut down the computer"
+                ],
+                answer: 2,
+                explanation: "Automated tests check whether software behaves as expected."
+            },
+            {
+                question: "12. What is a pipeline in DevOps?",
+                options: [
+                    "A physical water pipe",
+                    "A drawing application",
+                    "A computer keyboard",
+                    "A sequence of automated software delivery steps"
+                ],
+                answer: 3,
+                explanation: "A pipeline organizes stages such as build, test, and deploy."
+            },
+            {
+                question: "13. What does YAML commonly store in DevOps projects?",
+                options: [
+                    "Configuration and workflow definitions",
+                    "Only photographs",
+                    "Only audio files",
+                    "Computer hardware"
+                ],
+                answer: 0,
+                explanation: "YAML is often used for readable configuration and workflow files."
+            },
+            {
+                question: "14. What is cloud computing?",
+                options: [
+                    "Repairing a keyboard",
+                    "Using computing services over a network",
+                    "Writing notes on paper",
+                    "Drawing cloud pictures"
+                ],
+                answer: 1,
+                explanation: "Cloud computing provides computing services over a network, usually the internet."
+            },
+            {
+                question: "15. Which is an example of a cloud platform?",
+                options: [
+                    "MS Paint",
+                    "Windows Notepad",
+                    "Microsoft Azure",
+                    "A text document"
+                ],
+                answer: 2,
+                explanation: "Microsoft Azure is a cloud computing platform."
+            },
+            {
+                question: "16. What is monitoring in DevOps?",
+                options: [
+                    "Writing a story",
+                    "Changing a wallpaper",
+                    "Deleting every log",
+                    "Tracking application health and performance"
+                ],
+                answer: 3,
+                explanation: "Monitoring helps teams track system health and performance."
+            },
+            {
+                question: "17. What is the purpose of a Git branch?",
+                options: [
+                    "To work on changes separately from another branch",
+                    "To clean the keyboard",
+                    "To install a printer",
+                    "To create a website background"
+                ],
+                answer: 0,
+                explanation: "Branches let developers work on separate lines of development."
+            },
+            {
+                question: "18. What does Infrastructure as Code mean?",
+                options: [
+                    "Drawing a network on paper",
+                    "Managing infrastructure through machine-readable configuration",
+                    "Building computers manually only",
+                    "Writing a poem about servers"
+                ],
+                answer: 1,
+                explanation: "Infrastructure as Code manages infrastructure using configuration files or code."
+            },
+            {
+                question: "19. What is the purpose of a README file in GitHub?",
+                options: [
+                    "To run the monitor",
+                    "To replace all source code",
+                    "To explain the project and how to use it",
+                    "To format the keyboard"
+                ],
+                answer: 2,
+                explanation: "A README introduces the project and provides useful instructions."
+            },
+            {
+                question: "20. Why is rollback useful during deployment?",
+                options: [
+                    "It increases screen size",
+                    "It changes the programming language",
+                    "It creates a new keyboard",
+                    "It helps return to an earlier working version"
+                ],
+                answer: 3,
+                explanation: "Rollback helps restore an earlier working version after a failed release."
+            }
+        ];
+
+        const QUESTIONS_PER_QUIZ = 5;
+
+        let quizQuestions = [];
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        const questionElement = document.getElementById("question");
+        const optionsElement = document.getElementById("options");
+        const progressElement = document.getElementById("progress");
+        const feedbackElement = document.getElementById("feedback");
+        const nextButton = document.getElementById("nextButton");
+        const restartButton = document.getElementById("restartButton");
+        const scoreElement = document.getElementById("score");
+
+        // Randomly shuffle the questions and select five.
+        function startQuiz() {
+            const shuffled = [...questionBank];
+
+            // Fisher-Yates shuffle
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+
+                [shuffled[i], shuffled[j]] =
+                    [shuffled[j], shuffled[i]];
+            }
+
+            quizQuestions = shuffled.slice(0, QUESTIONS_PER_QUIZ);
+
+            currentQuestion = 0;
+            score = 0;
+            answered = false;
+
+            scoreElement.textContent = "";
+            feedbackElement.textContent = "";
+            restartButton.hidden = true;
+            nextButton.hidden = true;
+
+            showQuestion();
+        }
+
+        // Display the current question and its options.
+        function showQuestion() {
+            answered = false;
+
+            const q = quizQuestions[currentQuestion];
+
+            progressElement.textContent =
+                `Question ${currentQuestion + 1} of ${quizQuestions.length}`;
+
+            questionElement.textContent = q.question;
+            optionsElement.innerHTML = "";
+            feedbackElement.textContent = "";
+
+            q.options.forEach((option, index) => {
+                const button = document.createElement("button");
+
+                button.textContent = option;
+                button.className = "option";
+                button.type = "button";
+
+                button.addEventListener("click", () => {
+                    checkAnswer(index);
+                });
+
+                optionsElement.appendChild(button);
+            });
+        }
+
+        // Check the selected answer.
+        function checkAnswer(selectedIndex) {
+            if (answered) return;
+
+            answered = true;
+
+            const q = quizQuestions[currentQuestion];
+            const buttons = optionsElement.querySelectorAll(".option");
+
+            buttons.forEach(button => {
+                button.disabled = true;
+            });
+
+            if (selectedIndex === q.answer) {
+                score++;
+                feedbackElement.textContent =
+                    "✅ Correct! " + q.explanation;
+                feedbackElement.style.color = "#4ade80";
+            } else {
+                feedbackElement.textContent =
+                    "❌ Incorrect. " +
+                    "Correct answer: " + q.options[q.answer] +
+                    ". " + q.explanation;
+                feedbackElement.style.color = "#f87171";
+            }
+
+            if (currentQuestion < quizQuestions.length - 1) {
+                nextButton.textContent = "Next Question ➡️";
+                nextButton.hidden = false;
+            } else {
+                nextButton.hidden = true;
+
+                questionElement.textContent = "Quiz Completed! 🎉";
+                progressElement.textContent = "You finished all five questions.";
+
+                scoreElement.textContent =
+                    `Your Score: ${score} / ${quizQuestions.length}`;
+
+                restartButton.hidden = false;
+            }
+        }
+
+        // Move to the next question.
+        nextButton.addEventListener("click", () => {
+            if (!answered) return;
+
+            currentQuestion++;
+            showQuestion();
+            nextButton.hidden = true;
+        });
+
+        // Start a new randomly selected quiz.
+        restartButton.addEventListener("click", startQuiz);
+
+        // Automatically load a random quiz when the page opens.
+        startQuiz();
+    </script>
+
+</body>
+</html>
+
