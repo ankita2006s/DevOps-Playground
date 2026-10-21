@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+    <h2>📦 Docker Simulator</h2>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="git.html">Git</a>
+        <a href="pipeline.html">CI/CD</a>
+        <a href="quiz.html">Quiz</a>
+    </nav>
+</header>
+
+<main class="page-content">
+    <h1>Learn Docker Containers</h1>
+
+    <p>
+        Simulate creating, starting, and stopping a container.
+    </p>
+
+    <section class="panel">
+        <h2>Container Manager</h2>
+
+        <p>Container Name: student-app</p>
+        <p>Image: python-web-app:1.0</p>
+
+        <div class="actions">
+            <button class="button" id="create">Create Container</button>
+            <button class="button" id="start">Start Container</button>
+            <button class="button" id="stop">Stop Container</button>
+            <button class="button secondary-button" id="reset">Reset</button>
+        </div>
+
+        <h3>Container Status</h3>
+        <p id="status">Container has not been created.</p>
+
+        <h3>Activity Log</h3>
+        <pre class="output" id="log" aria-live="polite">Waiting for an action...</pre>
+    </section>
+</main>
+
+<script>
+    let created = false;
+    let running = false;
+
+    const status = document.getElementById("status");
+    const log = document.getElementById("log");
+
+    function addLog(message) {
+        log.textContent += "\n" + message;
+    }
+
+    document.getElementById("create").addEventListener("click", () => {
+        if (created) {
+            addLog("Container already exists.");
+            return;
+        }
+
+        created = true;
+        running = false;
+
+        status.textContent = "Container created but stopped.";
+        addLog("Simulation: Container created from python-web-app:1.0.");
+    });
+
+    document.getElementById("start").addEventListener("click", () => {
+        if (!created) {
+            addLog("Error: Create the container first.");
+            return;
+        }
+
+        if (running) {
+            addLog("Container is already running.");
+            return;
+        }
+
+        running = true;
+        status.textContent = "Container is running.";
+        addLog("Simulation: Container started.");
+    });
+
+    document.getElementById("stop").addEventListener("click", () => {
+        if (!created || !running) {
+            addLog("Error: No running container to stop.");
+            return;
+        }
+
+        running = false;
+        status.textContent = "Container is stopped.";
+        addLog("Simulation: Container stopped.");
+    });
+
+    document.getElementById("reset").addEventListener("click", () => {
+        created = false;
+        running = false;
+
+        status.textContent = "Container has not been created.";
+        log.textContent = "Simulation reset.";
+    });
+</script>
+
+</body>
+</html>
+
