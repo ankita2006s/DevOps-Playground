@@ -1,7 +1,6 @@
 pipeline {
 agent any
 
-```
 options {
     timestamps()
 }
@@ -82,6 +81,5 @@ post {
         echo 'Jenkins CI pipeline failed. Check the stage logs.'
     }
 }
-```
 
 }
