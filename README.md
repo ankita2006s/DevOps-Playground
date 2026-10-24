@@ -2,57 +2,59 @@
 
 ## 📌 Introduction
 
-DevOps Playground is an interactive educational website designed to help students understand fundamental DevOps concepts through simple, interactive simulations.
+DevOps Playground is an interactive educational website designed to help students understand fundamental DevOps concepts through simple simulations.
 
-The website includes learning modules for Git, CI/CD pipelines, Docker, and DevOps fundamentals. It also integrates Jenkins for automated validation of the project's source code.
+The website provides interactive learning modules for Git commands, CI/CD pipelines, Docker concepts, and DevOps fundamentals through quizzes. The project also uses Jenkins to automate basic validation checks on the website files.
 
 ## 🎯 Objectives
 
 * To understand fundamental DevOps concepts.
 * To learn Git and GitHub version control.
 * To understand the stages of a CI/CD pipeline.
-* To explore Docker and container operations.
+* To explore Docker container operations.
 * To test DevOps knowledge through interactive quizzes.
 * To gain practical experience in website development.
-* To understand Continuous Integration using Jenkins.
+* To understand basic CI pipeline automation using Jenkins.
 
 ## 🛠️ Technologies Used
 
-* HTML5
-* CSS3
-* JavaScript
-* Git
-* GitHub
-* Jenkins
-* Groovy (Jenkins Pipeline)
+| Technology | Purpose                                          |
+| ---------- | ------------------------------------------------ |
+| HTML5      | Structures the website pages.                    |
+| CSS3       | Styles the website and its layout.               |
+| JavaScript | Provides interactive website functionality.      |
+| Git        | Tracks project changes using version control.    |
+| GitHub     | Hosts the project repository and commit history. |
+| Jenkins    | Automates basic project validation checks.       |
+| Groovy     | Used to write the Jenkins pipeline script.       |
 
 ## ✨ Features
 
 ### 1. Home Page
 
-Provides an introduction to DevOps Playground and navigation to the learning modules.
+Introduces DevOps Playground and provides navigation to the learning modules.
 
 ### 2. Git Simulator
 
-Demonstrates basic Git operations through an interactive terminal-style simulation.
+Demonstrates basic Git commands through an interactive terminal-style simulation.
 
 ### 3. CI/CD Pipeline Simulator
 
-Explains the main stages of a CI/CD pipeline, including Code, Build, Test, and Deploy.
+Explains the basic stages of a CI/CD pipeline, including Code, Build, Test, and Deploy.
 
 ### 4. Docker Simulator
 
-Provides an educational simulation of basic Docker container operations.
+Provides an educational simulation to help users understand basic Docker container operations.
 
 ### 5. DevOps Quiz
 
-Allows users to test their understanding of DevOps concepts through an interactive quiz.
+Allows users to test their knowledge of DevOps concepts through interactive questions.
 
-### 6. Jenkins Continuous Integration
+### 6. Jenkins CI Pipeline
 
-Uses a Jenkins pipeline to retrieve the source code from GitHub and perform automated checks on required project files and basic HTML structure.
+Uses Jenkins and a `Jenkinsfile` to automate basic checks for required website files and HTML structure.
 
-**Note:** The Git, CI/CD, and Docker learning modules are educational simulations. The Jenkins pipeline performs source-code validation; it does not deploy the website.
+---
 
 ## 📸 Website Screenshots
 
@@ -86,102 +88,39 @@ Uses a Jenkins pipeline to retrieve the source code from GitHub and perform auto
 
 ### 8. DevOps Quiz — Alternative View
 
-![DevOps Quiz Alternative](screenshots/Quiz.png)
+![DevOps Quiz](screenshots/Quiz.png)
 
-## ⚙️ How to Run the Project
+---
 
-1. Clone or download the GitHub repository.
-2. Open the project folder in Visual Studio Code.
-3. Open `index.html` in a web browser.
+## ⚙️ Jenkins Continuous Integration (CI)
 
-Alternatively, install the Live Server extension in Visual Studio Code, right-click `index.html`, and select **Open with Live Server**.
+Jenkins is used to automate basic validation checks for the DevOps Playground project.
 
-## 🔄 Git and GitHub Workflow
-
-Git is used to track changes in the project, while GitHub hosts the repository and stores its commit history.
-
-The following commands are used for version control:
-
-```bash
-git init
-git add .
-git commit -m "Describe your changes"
-git push
-```
-
-The project is developed incrementally, with separate commits for meaningful changes.
-
-### GitHub Repository
-
-Repository: https://github.com/ankita2006s/DevOps-Playground
-
-### GitHub Repository Screenshot
-
-![GitHub Repository](screenshots/github-repository.png)
-
-### GitHub Commit History
-
-The commit history demonstrates the project's development and the use of Git for version control.
-
-![GitHub Commit History](screenshots/github-commits.png)
-
-## 📝 Project Changes and Commit History
-
-The following table describes the main project changes. Verify the commit messages against the actual GitHub history before submission.
-
-| No. | Commit Message                | Description                                                    |
-| --- | ----------------------------- | -------------------------------------------------------------- |
-| 1   | Add homepage and navigation   | Created the homepage and website navigation.                   |
-| 2   | Add interactive Git simulator | Added the Git simulation page.                                 |
-| 3   | Add CI CD pipeline simulator  | Added the CI/CD pipeline simulation.                           |
-| 4   | Add Docker simulator          | Added the Docker simulation page.                              |
-| 5   | Add DevOps quiz functionality | Added the DevOps quiz page.                                    |
-| 6   | Add Jenkins CI pipeline       | Added Jenkins pipeline configuration for automated validation. |
-
-**Note:** Include only commits that actually exist in your Git history. The Jenkins commit should be included after the `Jenkinsfile` has been committed and pushed.
-
-## 🔧 Jenkins Continuous Integration (CI)
-
-Jenkins is integrated with the DevOps Playground GitHub repository to automate checks on the project's source code.
-
-The pipeline is defined in a file named `Jenkinsfile` in the root directory of the repository.
+The pipeline is defined in the `Jenkinsfile`, which is stored in the root directory of the project repository.
 
 ### Jenkins Pipeline Stages
 
-**1. Checkout**
-
-Retrieves the project's source code from the configured GitHub repository.
-
-**2. Validate Website Files**
-
-Checks whether the required HTML and CSS files exist in the project.
-
-**3. Validate HTML Structure**
-
-Performs basic checks to confirm that each required HTML page contains opening and closing HTML root tags.
-
-**4. CI Result**
-
-Reports whether the pipeline completed successfully or failed.
+1. **Checkout:** Retrieves the project source code from GitHub.
+2. **Validate Website Files:** Checks whether the required website files exist.
+3. **Validate HTML Structure:** Checks for basic opening and closing HTML tags.
+4. **CI Result:** Reports the pipeline result.
 
 ### Jenkins Configuration
 
-* **Jenkins Job:** `DevOps-Playground-CI`
-* **Pipeline Type:** Pipeline script from SCM
-* **Source Control:** Git
+* **Job Name:** `DevOps-Playground-CI`
 * **Repository:** `https://github.com/ankita2006s/DevOps-Playground.git`
 * **Branch:** `main`
 * **Pipeline Script:** `Jenkinsfile`
 
-### Jenkins Integration Screenshots
+### Jenkins Screenshots
 
 #### 1. Jenkins Dashboard
 
-![Jenkins Dashboard](screenshots/jenkins-dashboard.png)
+![Jenkins Dashboard](screenshots/jenkins-dashboard.png.png)
 
-#### 2. Successful Jenkins Pipeline
+#### 2. Jenkins Build Success
 
-![Jenkins CI Success](screenshots/jenkins-success.png)
+![Jenkins Successful Build](screenshots/jenkins-success.png)
 
 #### 3. Jenkins Console Output
 
@@ -191,24 +130,144 @@ Reports whether the pipeline completed successfully or failed.
 
 ![Jenkinsfile on GitHub](screenshots/jenkinsfile-github.png)
 
-**Note:** The success screenshot should show a completed build with `Finished: SUCCESS`. If the console-output screenshot shows an earlier failed build, replace it with the output from the successful build before using it as proof of successful integration.
+> **Note:** The pipeline performs basic file-existence and HTML-structure checks. It does not perform a complete HTML validation or deploy the website. A successful build should be reported only when confirmed in Jenkins.
+
+---
+
+## 🔄 Git and GitHub Workflow
+
+Git is used to track changes to the project, while GitHub hosts the repository and its commit history.
+
+The following commands were used during project development.
+
+### Check Git Status
+
+```bash
+git status
+```
+
+### Add Project Files
+
+```bash
+git add .
+```
+
+### Commit Changes
+
+```bash
+git commit -m "Describe your changes"
+```
+
+### Push Changes to GitHub
+
+```bash
+git push origin main
+```
+
+### View Commit History
+
+```bash
+git log --oneline
+```
+
+### GitHub Repository
+
+[Open the DevOps Playground Repository](https://github.com/ankita2006s/DevOps-Playground)
+
+### GitHub Commit History Screenshot
+
+The following screenshot provides evidence of the project's GitHub commit history.
+
+![GitHub Commit History](screenshots/github-commits.png)
+
+### View Commits Online
+
+[View All Commits on GitHub](https://github.com/ankita2006s/DevOps-Playground/commits/main/)
+
+---
+
+## 📝 Project Changes and Commit History
+
+The project was developed incrementally using Git.
+
+| No. | Commit Message                                    | Description                                        |
+| --- | ------------------------------------------------- | -------------------------------------------------- |
+| 1   | Add homepage and navigation                       | Created the homepage and website navigation.       |
+| 2   | Add interactive Git simulator                     | Added the Git simulation page.                     |
+| 3   | Add CI CD pipeline simulator                      | Added the CI/CD pipeline simulation.               |
+| 4   | Add Docker simulator                              | Added the Docker simulation page.                  |
+| 5   | Add DevOps quiz functionality                     | Added the DevOps quiz functionality.               |
+| 6   | Update README with Jenkins and GitHub screenshots | Updated the project documentation and screenshots. |
+| 7   | Add JavaScript functionality                      | Added the `script.js` file.                        |
+
+**Note:** Verify the actual commit messages in GitHub before submitting. The table should reflect your real Git history.
+
+---
+
+## 💻 How to Run the Project
+
+### Prerequisites
+
+* A web browser.
+* Visual Studio Code or another code editor.
+* Git installed on your computer.
+
+### Steps
+
+**Step 1: Clone the repository**
+
+```bash
+git clone https://github.com/ankita2006s/DevOps-Playground.git
+```
+
+**Step 2: Open the project folder**
+
+```bash
+cd DevOps-Playground
+```
+
+**Step 3: Open the folder in Visual Studio Code**
+
+Open the project folder using Visual Studio Code.
+
+**Step 4: Run the website**
+
+Open `index.html` in your browser.
+
+Alternatively, install the Live Server extension in Visual Studio Code, right-click `index.html`, and select **Open with Live Server**.
+
+---
 
 ## 📚 Learning Outcomes
 
-* Learned to develop a website using HTML, CSS, and JavaScript.
-* Practiced version control using Git.
-* Learned to manage a project repository using GitHub.
-* Understood the fundamental stages of CI/CD.
-* Explored Docker and container concepts through simulations.
-* Learned how to configure a Jenkins pipeline.
-* Gained practical experience with automated source-code validation.
+* Learned how to structure web pages using HTML5.
+* Practiced styling websites using CSS3.
+* Explored JavaScript for interactive functionality.
+* Learned version control using Git.
+* Practiced managing a repository on GitHub.
+* Understood the basic stages of a CI/CD pipeline.
+* Explored Docker concepts through simulations.
+* Learned how to configure a Jenkins pipeline using a `Jenkinsfile`.
+* Practiced basic automated project validation using Jenkins.
+* Learned how to document project development and integration evidence.
+
+---
 
 ## 🏁 Conclusion
 
 DevOps Playground is an educational website that introduces fundamental DevOps concepts through interactive simulations.
 
-The project combines front-end web development with Git, GitHub, and Jenkins to demonstrate version control and Continuous Integration. It provides practical learning experience and helps students understand how automated validation can be incorporated into a software development workflow.
+The project combines web development, Git, GitHub, Docker concepts, and Jenkins-based CI pipeline validation. It provides practical experience with version control and basic automation while helping students understand important DevOps principles.
 
-## 🔗 GitHub Repository
+---
 
-**Project Repository:** https://github.com/ankita2006s/DevOps-Playground
+## 🔗 Project Repository
+
+**Project Name:** DevOps Playground — Learn Through Interactive Simulations
+
+**GitHub Repository:**
+https://github.com/ankita2006s/DevOps-Playground
+
+**Technologies:** HTML5, CSS3, JavaScript, Git, GitHub, Jenkins, and Groovy.
+
+**Project Type:** Educational website with interactive DevOps simulations and basic CI pipeline validation.
